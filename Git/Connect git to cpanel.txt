@@ -1,10 +1,10 @@
-ssh-keygen -t rsa -b 2048 -C "catericoilogicx@caterico.ilogicx.com"
+ssh-keygen -t rsa -b 2048 -C "username@domain"
 
 touch ~/.ssh/config
 
 chmod 0600 ~/.ssh/config
 
-chown catericoilogicx:catericoilogicx ~/.ssh/config
+chown username:username ~/.ssh/config
 
 ssh -T git@github.com
 
@@ -13,8 +13,8 @@ ssh -T git@github.com
 
 Here,
 
-"catericoilogicx" is username and 
-"caterico.ilogicx.com" is domain
+"username" is username and 
+domain" is domain
 
 ====================================
 
