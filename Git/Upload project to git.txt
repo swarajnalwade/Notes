@@ -1,0 +1,50 @@
+//Upload project to git in private repository
+
+//Open git bash in project
+
+//Initilize git repositary
+git init
+
+//check status
+git status
+
+//to add files to git
+git add .
+
+//commit to change
+git commit -m "Initial commit"
+
+//check the status again
+git status
+
+//add remote origin
+git remote add origin git@github.com:Dotphi2024/caterico.git
+
+//add files to repositry
+git remote set-url origin https://github.com/Dotphi2024/caterico.gittory 
+
+//take this whole url
+git remote set-url origin htt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token@github.com/Dotphi2024/caterico.git
+
+//push the files master branch
+git push origin master
+OR
+git push origin master --force
+
+Create a personal access token from github developer setting and create personale access key:
+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ting
+
+
+
+//For Public Repository
+git init 
+
+git add .
+git commit -m "all icon fix"
+
+git remote set-url origin https://github.com/swarajnalwade/Digital-Tools.git
+
+git remote set-url origin https://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@github.com/swarajnalwade/Digital-Tools.git
+
+git push origin master
+

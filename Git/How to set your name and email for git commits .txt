@@ -1,0 +1,10 @@
+To set your name and email for git commits run below commands in your terminal:
+Note : must replace your email and name before running below commands.
+
+-----------------------------------------------------------------------------
+Commands:
+
+git config --global user.email "yourmail@gmail.com"
+git config --global user.name "Your Name"
+
+-----------------------------------------------------------------------------
