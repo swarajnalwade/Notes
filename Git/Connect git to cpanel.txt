@@ -1,0 +1,24 @@
+ssh-keygen -t rsa -b 2048 -C "catericoilogicx@caterico.ilogicx.com"
+
+touch ~/.ssh/config
+
+chmod 0600 ~/.ssh/config
+
+chown catericoilogicx:catericoilogicx ~/.ssh/config
+
+ssh -T git@github.com
+
+
+====================================
+
+Here,
+
+"catericoilogicx" is username and 
+"caterico.ilogicx.com" is domain
+
+====================================
+
+Notes:
+After the 4th command Create and authorize ssh key and add it as the deployment key in GitHub setting.
+
+Then through git version control connect the repository to cPanel.
