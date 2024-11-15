@@ -1,0 +1,56 @@
+file_put_contents():Failed to open stream: Permission denied
+Notes:
+1.This error sometime occurs after you deploy your laravel project to cpanel.
+2.To solve this error you have to do 2 things (Optional)
+    a.Give permission to all the folder and file in storage folder 
+    b.Clear cache.
+3.This will solve this issue.
+
+--------------------------------------------------------------------------------
+
+1. Give permission to all the folder and file in storage folder.
+
+Step 1:
+Go to your terminal in cpanel.
+
+Step 2:
+Select your root directory(Mainly public_html) by following command.
+
+cd public_html
+
+Step 3:
+now set the permission to all the folder and files by below commands.
+
+chmod -R 777 storage
+chmod -R 777 bootstrap/cache
+chmod 664 storage/logs/laravel.log
+chmod -R 775 storage/framework/sessions/
+chmod -R 775 storage/framework/views/
+
+
+OR
+if it dosen't work try to use below commands as form home directory
+
+cd
+chmod -R 777 /home/username/public_html/testproject/storage
+chmod -R 777 /home/username/public_html/testproject/bootstrap/cache
+chmod -R 775 /home/username/public_html/testproject/storage/logs/laravel.log
+chmod -R 775 home/username/public_html/testproject/storage/framework/
+chmod -R 775 /home/username/public_html/testproject/storage/framework/sessions/
+chmod -R 775 /home/username/public_html/testproject/storage/framework/views/
+
+--------------------------------------------------------------------------------
+
+2. Clear cache.
+
+php artisan route:clear 
+php artisan config:clear 
+php artisan view:clear 
+php artisan event:clear 
+php artisan clear-compiled
+php artisan config:cache 
+php artisan route:cache
+php artisan cache:clear
+
+
+--------------------------------------------------------------------------------
