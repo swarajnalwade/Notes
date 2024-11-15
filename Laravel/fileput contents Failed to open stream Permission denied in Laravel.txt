@@ -32,12 +32,12 @@ OR
 if it dosen't work try to use below commands as form home directory
 
 cd
-chmod -R 777 /home/username/public_html/testproject/storage
-chmod -R 777 /home/username/public_html/testproject/bootstrap/cache
-chmod -R 775 /home/username/public_html/testproject/storage/logs/laravel.log
-chmod -R 775 home/username/public_html/testproject/storage/framework/
-chmod -R 775 /home/username/public_html/testproject/storage/framework/sessions/
-chmod -R 775 /home/username/public_html/testproject/storage/framework/views/
+chmod -R 777 /home/username/public_html/storage
+chmod -R 777 /home/username/public_html/bootstrap/cache
+chmod -R 775 /home/username/public_html/storage/logs/laravel.log
+chmod -R 775 home/username/public_html/storage/framework/
+chmod -R 775 /home/username/public_html/storage/framework/sessions/
+chmod -R 775 /home/username/public_html/storage/framework/views/
 
 --------------------------------------------------------------------------------
 
