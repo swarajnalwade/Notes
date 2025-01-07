@@ -1,0 +1,20 @@
+# Set a default PHP handler if not already defined
+<IfModule mime_module>
+  # Allow for the selection of PHP versions dynamically
+  AddHandler application/x-httpd-php .php .php7 .phtml
+  AddHandler application/x-httpd-ea-php56 .html .htm
+</IfModule>
+
+# Redirect all requests to www
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^yourdomain\.com [NC]
+RewriteRule ^(.*)$ https://www.yourdomain.com/$1 [L,R=301]
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php73” package as the default if the server defaults to this version.
+# Retain compatibility with cPanel settings.
+
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php73 .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
