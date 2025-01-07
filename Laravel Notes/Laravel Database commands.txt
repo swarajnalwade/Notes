@@ -1,0 +1,53 @@
+// to migrate the migrations 
+php artisan migrate
+
+
+//to rollback the recent migration
+php artisan migrate: rollback
+
+//to rollback all the migration 
+php artisan migrate:reset
+
+//to rollback all the migrations and then migrate all migrations again
+php artisan migrate: refresh 
+
+// To create a migration table
+php artisan make:migration create_tablename_table
+
+//after creating table you can add the columns in file
+like below:
+
+            $table->id('e_id');
+            $table->string('ee_name',30);
+            $table->string('e_city',30)->nullable();
+            $table->boolean('e_status')->default("1");
+            $table->date('e_date');
+            $table->string('e_pam',30);
+
+Here id is already set to  be on auto-increment
+if you want to give null value then you can you nullable();
+if you want to set a default value then you can use default();
+
+//to add a column to an already created table
+php artisan make:migration add_column_to_tablename_table
+
+after this command, a separate migration file will be created 
+where you can assign column names and their data types
+
+            $table->date('e_date');
+            $table->string('e_pam',30);
+
+you can also use ->after();
+to adjust the position of column
+Example:
+
+$table->string('e_mobile',15)->after('e_city');
+
+but you can only use -after() if you created a separate migration file to add columns.
+
+
+
+
+
+
+

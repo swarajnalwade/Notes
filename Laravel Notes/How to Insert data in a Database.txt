@@ -1,0 +1,51 @@
+How to Insert Data in a Database
+
+Previously we have seen how to send data to the controller from FORM(view)
+
+to store data in a database :
+
+
+Step 1:
+
+create a model and database and connect the model to the database
+
+
+step 2:
+
+include the model in the controller page
+
+use App\Models\moduleName;
+
+
+step 3:
+
+create the object of model
+
+$data= new modelName;
+
+
+step 4:
+
+now using the object set the data received from post method into the database
+
+
+$data->columnName = $request['input field name'];
+$data->save();
+
+
+Example:
+
+file name: DemoController.php
+
+use App\Models\contact;
+
+    public function send(Request $request){
+       
+        $contact = new contact;
+        $contact->c_name= $request['c_name'];
+        $contact->c_email= $request['c_email'];
+        $contact->c_mobile = $request['c_mobile'];
+        $contact->c_password=$request['c_password'];
+        $contact->save();
+        return "Record inserted successfully";
+    }

@@ -1,0 +1,20 @@
+Pagination is used to show data in form of pages 
+Step 1:
+use paginate() function while creating database instance inside a function 
+in a  controller from where you are sending the data in view.
+
+Example:
+
+    public function list(){
+
+        $data = employee::paginate(10);
+        return view('list',['data'=>$data]);
+    }
+Step 2:
+add links to go to next pages 
+Example:
+Create the div in inside the div add this code using blade tamplate.
+
+    <div class="pagination-container">
+        {{ $data->links('pagination::bootstrap-5') }}
+    </div>

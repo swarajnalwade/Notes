@@ -1,0 +1,46 @@
+Components are used to create and reuse the HTML component
+
+Step 1: 
+Create a component through command line.
+Command :
+
+php artisan make:component componentname
+
+It will create a two files 
+one in app folder also known as main file
+and second in view folder 
+In the Main component file in app folder we pass the values for variable to make component dynamic 
+and in second file we create a component to uses  in views it has .balde extension
+
+Step 2:
+now create a component in second file (.blade)
+<div>
+
+<label> {{$label}}</label>
+<input type="{{$type}}" name="{{$name}}" placeholder="{{$placeholder}}" >
+</div>
+
+
+Step 3:
+
+pass those values into first main file
+so we can assign values to it dynamically
+
+    public $name;
+    public $label;
+    public $placeholder;
+    public $type;
+    public function __construct( $type, $name, $label, $placeholder)
+    {
+        $this->type = $type;
+        $this->label = $label;
+        $this->name = $name;
+        $this->placeholder = $placeholder;
+    }
+
+
+Step 4:
+use the component in view page
+
+
+<x-abc_component type="text" name="name" placeholder="Enter email" label="Name:" />

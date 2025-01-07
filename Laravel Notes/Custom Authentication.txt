@@ -1,0 +1,117 @@
+How to Create Custom Authentication In Laravel
+
+Step 1:
+Create login and register page and layouts
+Create controller and models and routes to perform crud operations
+
+Note: you can use header bar and other code from default template
+
+step 2:
+Add code to create session for login and logout in controller
+
+Example:
+
+public function login(Request $request){
+$data = $request->session()->put("username",$data);
+return redetect ("home");
+}
+//or
+you acan also use code form loginController form Auth folder
+
+step 3:
+add middleware so user can access specific pages
+differ for different user and guest
+
+=============================
+
+//and if you want another type of users you can access different types of pages you can do it with creating different middle ware
+Steps:
+1.Create middleware
+2.add the below code in middleware 
+3.add the middleware in kernel.php
+4.add the middleware in routes
+
+Example: 
+
+use Illuminate\Support\Facades\Auth;
+
+if(Auth::Tablename()->columnname !='admin')
+{
+ return redirect('pagename');
+}
+
+return $next($request);
+
+=====================================
+
+add Middleware so user can only access some pages if he is login otherwiese he will acces gust page with help of middleware.
+laravcel provides both auth and guest middleware for user and guest.
+if you want to craete other user types trhe you can create other Middleware.
+
+Example:
+//for guest
+Route::middleware('auth')->group(function () {
+   //routes here
+});
+
+//for user 
+Route::middleware('auth')->group(function () {
+   //routes here
+});
+
+//for different type of user 
+Route::middleware('auth','middlewarename')->group(function () {
+   //routes here
+});
+
+
+=====================
+
+//and if you want to show another page if usertype is different then add this code in auth folder inside controller folder in AuthenticationsessionContoller.php and add beklow code in its store function
+
+Example:
+    $request->authenticate(); // Authenticate the user
+
+    $request->session()->regenerate(); // Regenerate the session
+
+    // Get the authenticated user
+    $user = auth()->user();
+
+    // Check the user type and redirect accordingly
+    if ($user->usercolumn === 'admin') {
+        return redirect()->intended(route('admin.dashboard')); // Redirect to admin dashboard
+    } else {
+        return redirect()->intended(route('dashboard')); // Redirect to user dashboard
+    }
+
+==========================================
+
+you can also control how many times user can try to login with invalid username and password
+with the help of throttle middleware
+
+Example:
+
+Route::get('login', [LoginController::class, 'login'])->name('login')->middleware('throttle:2,1');
+
+==============================================
+
+After registration user should automatically get login 
+Example:
+ Add this code in register function
+
+if(\Auth::attempt($request->only('username','password'))){
+return redirect('homepage');
+}
+return redirect('register)->hasError('Error');
+
+=================================
+
+Add code to send user to home page if user login even if he is already login
+
+Route::get("login", function(){
+if(session()->has('username')){
+
+return view('home');
+}
+
+});

@@ -1,0 +1,46 @@
+search is used to search and sgow data
+
+Step 1:
+create a normal table to show data
+
+Step 2:
+the create a sub form and add search field and and search button in it 
+Example:
+
+                <form action="{{Route('list')}}" method="get"> 
+                    <input type="search" name="search" placeholder="Search" class="search-box">
+                    <button type="submit" class="search-button">Search</button>
+                    <a href="{{Route('list')}}" class="reset-button">Reset</a>
+                </form>
+
+Step 3:
+Create a Route to pass search data to controller
+Example:
+
+Route::get('employee/list',[CrudController::class, 'list'])->name('list');
+
+Step 4:
+Create a function in controller 
+Example:
+
+
+    public function list(Request $request) {
+
+        $search = $request->search;
+        $data = Employee::where('e_name','like','%'.$search.'%')->orwhere('e_email','like','%'.$search.'%')->paginate(10)->withQueryString();
+        return view('list', ['data' => $data]);
+    }
+
+Here the text we searched will come in $request
+paginaet() is used to add pagination
+where() is used to search data
+orwhere() is query used to search data for exrtra conditions
+withQueryString() is used to keep the search results for differtent pages
+
+
+
+Note:
+You can add add the step 1 in same page where you are showing all data
+you just have to add if statement if search data is avalaible
+and you can also send this search result data to complete different page 
+

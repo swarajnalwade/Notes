@@ -1,0 +1,44 @@
+Step 1: 
+create a button on the edit page and add the route to it with the id of the data.
+Example: 
+ <a href="{{Route('edit',['c_id'=>$cont->c_id])}}">Edit</a>
+
+
+Step 2:
+
+create a route to send this ID to the method in the controller
+Example:
+Route::get('edit/{c_id}',[FormDataController::class, 'edit'])->name('edit');
+
+Step 3:
+Create a method in the controller to accept the data.
+Example:
+public function edit($c_id){
+}
+
+step 4:
+include the model 
+find the data for that ID and store it in a variable.
+send that variable where data is stored to view
+
+Example:
+use App\Models\contact;
+
+public function edit($c_id){
+
+  $data = contact::find($c_id);
+  return view('edit-form',['data' =>$data]);
+    }
+
+}
+
+Here find() is a function that will fetch the data for the ID from the database
+
+step 5:
+now set that data in the value of the input box
+Example:
+<input type="text" name="c_email" value="{{ old('c_email',$data->c_email) }}">
+
+
+
+

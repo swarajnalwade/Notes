@@ -1,0 +1,42 @@
+Helpers are used to create a custom function that can be used multiple times
+Step 1:
+Create a helper file in the app folder of the project
+Example:
+helper.php
+
+Step 2:
+
+create a function inside the helper file
+Example:
+
+<?php
+
+function p($data){
+
+echo "<pre>";
+print_r($data->toArray());
+echo"<pre>";
+
+}
+
+?>
+
+
+Step 3:
+
+load the helper in autoload in "composer.json" file
+Example:
+
+    "autoload": {
+        "files": [
+
+            "app/helper.php"
+        ]
+    }
+
+Step 4: 
+
+clear the cache from the command line
+Command:
+
+composer dump-autoload

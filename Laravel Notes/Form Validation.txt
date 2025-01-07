@@ -1,0 +1,40 @@
+ For form validation, we have to write the following syntax in the controller
+
+       $request->validate([
+        'name' => 'required',
+        'email' => 'required | email',
+        'number' => 'required |digits:10'
+       ]);
+
+Here $request is the name of the variable that is sending all data of the post method of form into the controller through Route
+
+validate() is a predefined function for validation
+inside the validation, we use [] because we have to validate multiple fields.
+
+'name','email','number' is the names of the input field
+
+ 'required |digits:10' are the  validation rules
+
+AND IN VIEW
+
+<div>
+label for="name">Name:</label>
+<input type="text" name="name" value ="{{old('name')}}"><br>
+      <span>
+          @error('name')
+          {{$message}}
+          @enderror
+      </span>
+</div>
+
+@error('name of input field') is a predefined function to execute the code if an error occurs after validation
+
+{{$message}} will print the error message
+
+value ="{{old('name')}}" is used to maintain the old value of the field  if an error occurs in another field 
+ 
+
+
+
+
+

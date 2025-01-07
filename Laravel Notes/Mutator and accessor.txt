@@ -1,0 +1,31 @@
+Mutator and accessor are used to modify data while inserting and fetching data
+The mutator and accessor used in the model
+
+Mutator :
+A mutator is used to modify data while inserting data
+
+   public function setNameAttribute($value){
+
+        $this->attributes['name']= ucwords($value);
+
+in setNameAttribute Name is name of the column 
+    }
+
+The name in setNameAttrubute is the name of column
+while writing a column name in setAttribute the first letter of columnname must be written in Capital
+'name' is also the name of the same column
+
+
+
+Accessor:
+Accessor is used to modify data while showing data
+
+     public function getEmailAttribute($value){
+
+        return strtoupper($value);
+    }
+
+
+In getEmailAttribute Email is the column name
+
+

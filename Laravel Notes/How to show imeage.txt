@@ -1,0 +1,24 @@
+How to Fetch imeage 
+
+Step 1:
+Create symbolic link for the folder
+Example:
+
+php artisan storage:link
+
+
+Step 2:
+Retrive the link and fetchthe imeage
+Example:
+
+<a href="{{ asset('uploads/' . basename($key->e_document)) }}" target="_blank">View</a>
+
+Here uploads is the name of folder where imeage is stored
+$key is a alais for $data 
+e_documnt is the column where name of file is stored 
+
+Note :
+You can also use img tag to show imeage 
+To show imeage on local host you have to change the app url and add folder in it
+
+

@@ -1,0 +1,175 @@
+Step 1:
+DB namespace
+Exaple:
+
+use Illuminate\Support\Facades\DB;
+
+Step 2:
+
+call the table 
+Example:
+DB::table('table')
+
+Note while using query builder we dont have to extend model we can directly call the table and perform operations on it.
+
+Methods:
+get,where,first,latest,value,find,pluck
+count,max,min,avg,sum
+exists, doesntExist
+select,distinct
+where(=>),where like, orwhere, whereAny, whereAll
+whereBetween,whereNotBetween
+whereIn, whereNotIn
+whereNull,whereNotNull
+whereDate, whereMonth, whereDay, whereYear
+groupBy,orderBy,having
+Joins
+CRUD Using Query Builder:
+
+
+get() method is used to retrieve all results from a query.
+$users = DB::table('users')->get();
+
+where: Adds a basic "where" clause to the query.
+$users = DB::table('users')->where('status', 'active')->get();
+$data = DB::table('employee')->where(['e_name'=>'swaraj','e_city'=>'sinnar'])->get();
+
+first: Retrieves the first record matching the query.
+$user = DB::table('users')->where('status', 'active')->first();
+
+latest: Orders results by a given column in descending order.
+$latestUser = DB::table('users')->latest('created_at')->first();
+
+find: Retrieves a record by its primary key.
+$user = User::find(1);
+
+value: Retrieves a single value from a single record.
+$email = DB::table('users')->where('id', 1)->value('email');
+
+pluck: Retrieves an array of values for a given column.
+$emails = DB::table('users')->pluck('email');
+
+count: Returns the number of records matching the query.
+$userCount = DB::table('users')->count();
+
+max: Retrieves the maximum value of a specified column.
+$maxPrice = DB::table('products')->max('price');
+
+min: Retrieves the minimum value of a specified column.
+$minPrice = DB::table('products')->min('price');
+
+avg: Retrieves the average value of a specified column.
+$averagePrice = DB::table('products')->avg('price');
+
+sum: Retrieves the sum of a specified column.
+$totalSales = DB::table('sales')->sum('amount');
+
+exists: Checks if any records exist for the current query.
+
+$data = DB::table('employee')->where('e_id',15); 
+  if($data->exists()){
+      echo "Available";
+  }else{
+       echo "Not available";
+  }
+
+doesntExist: Checks if no records exist for the current query.
+
+ $data = DB::table('employee')->where('e_id',15); 
+   if($data->doesntExist()){
+       echo "Not Available";
+   }else{
+       echo "Available";
+   }
+
+select: Specifies columns to select.
+$users = DB::table('users')->select('name', 'email')->get();
+
+distinct: Retrieves distinct values.
+$uniqueStatuses = DB::table('users')->distinct()->pluck('status');
+
+where (=>): Uses an operator for the "where" clause.
+$users = DB::table('users')->where('age', '>=', 18)->get();
+
+where like: Adds a "where like" clause for pattern matching.
+$users = DB::table('users')->where('name', 'like', '%John%')->get();
+
+orWhere: Adds an "or where" clause to the query.
+$users = DB::table('users')->where('status', 'active')->orWhere('role', 'admin')->get();
+
+
+whereAny: The condition will match if at least one of the provided conditions is true.
+$data = DB::table('employee')->whereAny(['e_name','e_email','e_city'],'like','%swaraj%')->get();
+
+whereAll:The condition will match only if all of the provided conditions are true
+$data = DB::table('employee')->whereAll(['e_name','e_email','e_city'],'like','%swaraj%')->get();
+
+orderBy: Orders results by a given column.
+$users = DB::table('users')->orderBy('name', 'asc')->get();
+
+Limit: The limit method restricts the number of results returned by a query.
+$data =DB::table('employee')->limit(5)->get();
+
+Offset: The offset method skips a specified number of records before starting to return the results.
+$data =DB::table('employee')->offset(5)->limit(10)->get();
+
+
+groupBy: Groups results by one or more columns.
+$data = DB::table('employee')->select('e_email')->groupBy('e_email')->get();
+
+having: Filters grouped results.
+$sales = DB::table('sales')
+    ->select('product_id', DB::raw('SUM(amount) as total_sales'))
+    ->groupBy('product_id')
+    ->having('total_sales', '>', 1000)
+    ->get();
+
+whereBetween: Filters results where a column's value is between two specified values.
+$data = DB::table('employee')->whereBetween('e_id',[10, 20])->get();
+
+whereNotBetween: Filters results where a column's value is not between two specified values.
+$data = DB::table('employee')->whereNot('e_id',[10, 30])->get();
+
+whereIn: Filters results where a column's value is in a given array.
+$data = DB::table('employee')->whereIn('e_id',[1,16,30])->get();
+
+Filters results where a column's value is not in a given array.
+$data = DB::table('employee')->whereNotIn('e_id',[1,16,30])->get();
+
+whereNull: Filters results where a column's value is NULL.
+$data = DB::table('employee')->whereNull('e_document')->get();
+
+whereNotNull: Filters results where a column's value is not NULL
+$data = DB::table('employee')->whereNotNull('e_document')->get();
+
+whereDate: Filters results where a column's date matches a specific date.
+$data = DB::table('employee')->whereDate('created_at','2024-07-30')->get();
+
+whereMonth: Filters results where a column's month matches a specific month.
+$data = DB::table('employee')->whereMonth('created_at','07')->get();
+
+whereDay: Filters results where a column's day matches a specific day.
+$data = DB::table('employee')->whereDay('created_at','26')->get();
+
+whereYear: Filters results where a column's year matches a specific year.
+$data = DB::table('employee')->whereYear('created_at','2024')->get();
+
+JOINS:
+$data = DB::table('employee')->join('contact','employee.e_id','=','contact.e_id')->get();
+$data = DB::table('employee')->leftjoin('contact','employee.e_id','=','contact.e_id')->get();
+$data = DB::table('employee')->rightjoin('contact','employee.e_id','=','contact.e_id')->get();
+
+
+CRUD Using Query Builder:
+
+Select:
+$users = DB::table('users')->get();
+
+insert:
+$data = DB::table('contact')->insert(['e_id'=>10,'name' => 'manish']);
+
+Update:
+$data = DB::table('contact')->where('e_id',22)->update(['e_id'=>22,'name' => 'manish']);
+
+Delete:
+$data = DB::table('contact')->where('e_id',22)->delete();

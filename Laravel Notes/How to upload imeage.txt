@@ -1,0 +1,55 @@
+Step 1:
+Create a input type file to create a upload option
+
+Example: 
+<input type="file" name="file">
+
+Step 2:
+add enctype in form 
+Example:
+
+<form action="" method="" enctype="multipart/form-data">
+
+
+Step 3:
+store a file in folder and store its pathe in a variable
+
+$fimename = $request->file('file')->store('upload');
+
+Note:
+Here upload is the name of folder where file will be uploded
+$filename is the name of variable where path of file is stored
+
+Step 4:
+store the path of file in database 
+Example:
+
+     $objectname->columnnname = $filename;
+     $$objectname-->save();
+
+
+
+
+To store the files with there original names
+
+Step 1:
+store a file name in a variable inside controller
+Example:
+
+$filename = $request->file('file')->getClientOriginalName();
+
+
+Step 2:
+store a file in folder
+ $request->file('file')->storeAs('upload', $filename);
+
+Note:
+by giving $filename as parameter the file will be sotre with its original name
+
+
+DELETE FILE:
+
+     Storage::delete($databaseobject->columnname);
+     $databaseobject->delete();
+
+To update: first delete previous imeage and then add new imeage

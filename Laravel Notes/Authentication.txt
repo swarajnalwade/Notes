@@ -1,0 +1,27 @@
+How to add authentication
+
+Step 1:
+Create columns in user table and migrate it.
+
+Step 2:
+Crate a folder for app layout and add header, footer, sidebar, etc and master files
+Then include all files in master file and extend master files view and yield the views in Masterfile
+
+Note: for header and footer you can use default code for layout folder which is provided by Laravel
+
+Step 3:
+Add routes to access this views in routes page with  middleware
+
+Note: you can use already created routes by Laravel for reference where middleware is already use so it will give you the idea about the middleware
+
+=====================================
+
+If yo want to create the multiple type of user 
+
+then create the separate layout folder for that user 
+
+create the middleware that will access only those pages for that specific user
+
+and add the condition in login controller to send user to different pages for different usertype
+
+create the routes and assign middleware to them so they can only access those specific pages for that user

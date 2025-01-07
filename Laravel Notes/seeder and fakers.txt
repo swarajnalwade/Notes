@@ -1,0 +1,74 @@
+seeder are used to store data 
+
+Step 1:
+
+Create a seeder through command line
+Example:
+
+
+php artisan make:seeder ContactSeeder
+
+Step 2:
+give the name space of module 
+create object of module and and write insert operation in run method
+
+Example:
+
+use App\Models\ModuleName;
+
+    public function run(): void
+    {
+        
+        $contact = new contact;
+        $contact->c_email= 'nalwadeswara@gmail.com';
+        $contact->c_mobile = '9172240639';
+        $contact->c_password= 'swarajnalwade';
+        $contact->save();
+
+    }
+
+Step 3:
+
+Run the database command to runnthe seeder through command line
+Command:
+
+php artisan db:seed
+
+
+fakers are ued to store fake data
+
+To use faker we have to create seeder first
+Then 
+
+Step 1:
+load the faker factory 
+Example:
+
+use Faker\Factory as Faker;
+
+Step 2:
+
+Create a faker object
+Example
+
+      $faker = Faker::create();
+
+Step3 : 
+
+insert fake data using a faker object.
+Example:
+
+
+    public function run(): void
+    {
+        
+      $contact = new contact;
+      $faker = Faker::create();
+      $contact->c_name= $faker->name; 
+      $contact->c_email=$faker->email;
+      $contact->c_mobile = '9172240639';
+      $contact->c_password= 'pass';
+      $contact->save();
+
+    }
+Note: you can use for all of to insert fake multiple records at once

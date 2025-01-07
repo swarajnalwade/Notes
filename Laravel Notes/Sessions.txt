@@ -1,0 +1,59 @@
+Sessions types of variables that holds the value  until the program is completed
+
+Step1:
+include the Request namespace
+
+use Illuminate\Http\Request;
+
+step 2:
+Create or put sessions:
+Example:
+
+Route::get('put-session',function(Request $request){
+session(['fullname'=>'helllo from start','lastname'=>'Hello from last ']);
+});
+
+
+step 3:
+create a get session to get a session.
+Example:
+
+Route::get('get-session', function(Request $request){
+echo session('fullname');
+});
+
+Now you can perform various operation all the sessions like send the seesion to view, or delete the session, etc.
+
+
+Route::get('get-session', function(Request $request){
+
+ // to print the session
+echo session('fullname');
+
+//to print all the current active sesions
+echo "<pre>";
+print_r(session()->all());
+
+});
+
+
+Route::get('delete-session', function(Request $request){
+
+//To delete a specific session
+$request->session()->forget('fullname');
+
+// To delete all session
+$request->session()->flush();
+
+});
+
+
+Route::get('put-session',function(Request $request){
+
+//flash ends the session on refreshing the page
+$request->session()->flash('message','flash message');
+
+});
+
+You can also print the session in another file by using the blade template
+{{session('sessionname')}}

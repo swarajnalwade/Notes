@@ -1,0 +1,36 @@
+//MODEL
+
+The model is used to perform data-related operations like insert, update, read, and delete data.
+
+Step 1:
+
+Create a model using the command line
+
+    php artisan make:model ModelName
+  OR
+    php artisan make:model MOdelName --migration
+
+Step 2:
+Connect the table and primary key in the model
+
+    protected $table ='employee';
+    protected $primaryKey='e_id';
+
+Step 3:
+give the namespace of model in Route file
+
+
+    use App\Models\ModelName;
+
+step 4:
+Load the model inside of route or controller
+and store its data in array
+
+
+    Route::get('emp',function(){
+    $data = employee::all();
+    print_r($data->toArray());
+    });
+
+Here 'employee' is the table name
+all() is an ORM allocate function of the model.

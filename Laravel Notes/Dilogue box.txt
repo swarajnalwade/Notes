@@ -1,0 +1,24 @@
+Show message Dialog
+
+Step one send message when redirecting to the view page in controller
+
+Step 1:
+return redirect()->route('Route_name')->with('message','Your Message Here');
+
+Step 2:
+add message inview page
+
+         @if(session()->has('message'))
+                 <div>
+                     {{ session()->get('message') }}
+                 </div>
+            @endif
+
+Step 3:
+add styling to it with css
+
+Step 4:
+Add close button on message and time to auto close with script
+
+
+

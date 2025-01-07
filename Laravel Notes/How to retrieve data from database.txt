@@ -1,0 +1,44 @@
+How to retrieve data and show in form of table
+
+Step 1:
+create database nad model
+
+Step 2:
+connect the database to theto the model
+
+    protected $table='Table Name';
+    protected $primaryKey ='Primary Key';
+
+step 3:
+include the model in controller
+
+use App\Models\contact;
+
+step 4:
+import the data and send it to the view in controllers
+    public function view(){
+
+    $data = contact::all();
+    return view('view name',['data'=>$data]);
+
+step 5:
+show the data in table format in view file
+
+@foreach($data as $cont)
+            <tr>
+                <td>{{ $cont->c_id }}</td>
+                <td>{{ $cont->c_name }}</td>
+                <td>{{ $cont->c_email }}</td>
+                <td>{{ $cont->c_mobile }}</td>
+                <td>{{ $cont->c_password }}</td>
+                <td>
+                    <a href="">Edit</a>
+                    <a href="">Delete</a>
+                </td>
+            </tr>
+            @endforeach
+
+
+
+
+

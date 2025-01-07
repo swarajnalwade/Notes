@@ -1,0 +1,61 @@
+Middleware in Laravel is a powerful feature that provides 
+a way tofilter HTTP requests entering your application and 
+perform various checks or transformations on the requests and respo
+
+
+Types of middleware 
+Global middelware
+Route midddleware
+Group middleware
+
+
+====================================================
+Global middleware:
+
+Global middleware is used when we have run the middleware on all pages or globaly
+Global middleware run on all requests
+
+Step 1: 
+Create middleware through command line
+
+php artisan make:middleware middlewarename
+
+Step 2:
+write a condition or code in middleware file
+
+Step 3:
+Assign middleware in global middleware stack in kernel.php 
+
+\App\Http\Middleware\MiddlewareName::class,
+
+=============================================
+
+Route midddleware:
+Route middleware are used to apply middleware on perticular route
+
+Step 1:
+Create middleware through command line
+
+php artisan make:middleware middlewarename
+
+
+Step 2:
+write a condition or code in middleware file
+
+Step 3:
+Assign middleware in middleware aliases in kernel.php 
+
+'test' => \App\Http\Middleware\Test::class,
+
+Step 4:
+add middleware specific route
+
+Route::get('routename',[Controllername::class, 'functionname'])->name('RouteName')->middleware('test');
+
+=====================================================
+
+Gropu Middleware:
+Group middleware are used when you have to apply middleware on groups
+
+
+
