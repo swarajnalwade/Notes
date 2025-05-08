@@ -1,0 +1,175 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<!--Contact form script-->
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#enquiryform').submit(function(e) {
+        e.preventDefault();
+        $('#check1').text(''); // Clear previous messages
+
+        var name = $('#name').val().trim();
+        var phone = $('#phone').val().trim();
+        var email = $('#email').val().trim();
+        var message = $('#message').val().trim();
+        var error = false;
+
+        var name_regex = /^[a-zA-Z\s]+$/;
+        var email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i; // Simplified and corrected email regex
+        var mobile_regex = /^\d{10}$/;
+
+        function showError(message, field) {
+            $('#check1').text(message).css("color", "red");
+            $(field).focus();
+            error = true;
+        }
+
+        if (!name.match(name_regex)) {
+            showError('** Please Enter a Valid Name **', "#name");
+        } else if (!phone.match(mobile_regex)) {
+            showError('** Please Enter a Valid 10-Digit Phone Number **', "#phone");
+        } else if (!email.match(email_regex)) {
+            showError('** Please Enter a Valid Email Address **', "#email");
+        } else if (message === "") {
+            showError('** Please Enter Your Message **', "#message");
+        }
+
+        if (error) {
+            return false;
+        }
+
+        var recaptchaResponse = grecaptcha.getResponse();
+        if (recaptchaResponse.length == 0) {
+            $('#check1').text('** Please verify that you are not a robot. **').css("color", "red");
+            return false;
+        }
+
+
+        $('#btn_submit').prop('disabled', true).val('Sending...');
+
+        var formData = new FormData($('#enquiryform')[0]);
+        $.ajax({
+            url: "contact_valid.php",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data) {
+                console.log("Server response:",
+                data); // Always log the response for debugging
+                if (data.toLowerCase().includes("success") || data.toLowerCase().includes(
+                        "sent")) {
+                    $('#btn_submit').prop('disabled', false).val('Sent');
+                    $('#check1').text(
+                            '** Thank You For Contacting Us, We Will Contact You Soon. **')
+                        .css("color", "green");
+                    $('#enquiryform')[0].reset(); // Reset form after success
+                } else {
+                    $('#btn_submit').prop('disabled', false).val('Retry');
+                    $('#check1').text(data).css("color", "red");
+                }
+            },
+            error: function() {
+                $('#btn_submit').prop('disabled', false).val('Retry');
+                $('#check1').text('** Error submitting form. Please try again later. **')
+                    .css("color", "red");
+            }
+        });
+    });
+});
+</script>
+
+
+<?php
+$domain = $_SERVER['SERVER_NAME']; 
+$curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1); 
+$curPageName1 = ucfirst(substr($curPageName, 0, -4));
+?>
+
+<!--leads script-->
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#enquiryform').submit(function(e) {
+        e.preventDefault();
+        $('#check1').html(''); // Clear previous error messages
+
+        var name = $('#name').val().trim();
+        var phone = $('#phone').val().trim();
+        var email = $('#email').val().trim();
+        var message = $('#message').val().trim();
+        var project_unique_code = "projectcode";
+        var domain = "<?php echo $domain; ?>";
+        var url = "<?php echo $curPageName; ?>";
+        var errors = [];
+
+        var name_regex = /^[a-zA-Z\s]+$/;
+        var email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var mobile_regex = /^\d{10}$/;
+
+        if (!name.match(name_regex) || name === "") {
+            $('#check1').text('** Please Enter a Valid Name **').css("color", "red");
+            return false;
+        }
+
+        if (!phone.match(mobile_regex) || phone === "") {
+            $('#check1').text('** Please Enter a Valid Phone Number **').css("color", "red");
+            return false;
+        }
+
+        if (!email.match(email_regex) || email === "") {
+            $('#check1').text('** Please Enter a Valid Email **').css("color", "red");
+            return false;
+        }
+
+        if (message === "") {
+            $('#check1').text('** Please Enter Your Message **').css("color", "red");
+            return false;
+        }
+
+        var recaptchaResponse = grecaptcha.getResponse();
+        if (recaptchaResponse.length == 0) {
+            $('#check1').text('** Please verify that you are not a robot. **').css("color", "red");
+            return false;
+        }
+
+        // Disable submit button
+        $('#btn_submit').prop('disabled', true).text('Sending...');
+
+        var form = $('#enquiryform')[0];
+        var formData = new FormData(form);
+        formData.append('domain', domain);
+        formData.append('project_unique_code', project_unique_code);
+        formData.append('url', url);
+
+        $.ajax({
+            url: "scriptlink here",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data) {
+                $('#btn_submit').prop('disabled', false).text('Submit Now');
+
+                if (data.toLowerCase().includes("success") || data.toLowerCase().includes(
+                        "sent")) {
+                    $('#check1').html(
+                            '** Thank You For Contacting Us, We Will Contact You Soon. **')
+                        .css("color", "green");
+                    $("#enquiryform")[0].reset(); // Reset form
+                } else {
+                    $('#check1').html(data).css("color", "red");
+                }
+            },
+            error: function() {
+                $('#btn_submit').prop('disabled', false).text('Retry');
+                $('#check1').html('** Error submitting form. Please try again later. **')
+                    .css("color", "red");
+            }
+        });
+
+        return false;
+    });
+});
+</script>
