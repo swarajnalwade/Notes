@@ -1,0 +1,115 @@
+App Acript:
+
+function doPost(e) {
+  var sheet = SpreadsheetApp.openById("sheetid").getActiveSheet();
+  
+  var data = e.parameter;
+  sheet.appendRow([
+    data.name || "",
+    data.email || "",
+    data.phone || "",
+    data.zipcode || "",
+    data.message || "",
+    data.service || "",
+    new Date()
+  ]);
+
+  var response = ContentService.createTextOutput(
+    JSON.stringify({ result: "success", message: "Data submitted successfully" })
+  ).setMimeType(ContentService.MimeType.JSON);
+  
+  // Fix CORS issue
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader("Access-Control-Allow-Methods", "POST");
+  response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  return response;
+}
+
+
+
+=====================================================
+
+Javascript:
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myForm').submit(function (e) {
+            e.preventDefault();
+
+                var name = $('#name').val();
+                var email = $('#email').val();
+                var phone = $('#phone').val();
+                var zipcode = 'NA';
+                var message = 'NA';
+                var service = 'NA';
+                var agree = $('#agree').is(':checked');
+    
+                var error = false;
+    
+                var name_regex = /^[a-zA-Z\s]*$/;
+                var email_regex = /\b(^(\S+@).+((\.com)|(\.net)|(\.edu)|(\.mil)|(\.gov)|(\.org)|(\.info)|(\.in)|(\.biz)|(\..{2,2}))$)\b/gi;
+                var mobile_regex = /\d{10}/;
+    
+                // Validation checks
+                if (!name.match(name_regex) || name === "") {
+                    $('#check1').html('** Please Enter your Name **').css("color", "red");
+                    $("#name").focus();
+                    return false;
+                }
+                if (!email.match(email_regex) || email === "") {
+                    $('#check1').html('** Please Enter a Valid Email **').css("color", "red");
+                    $("#email").focus();
+                    return false;
+                }
+                if (!phone.match(mobile_regex) || phone === "") {
+                    $('#check1').html('** Please Enter a Valid Phone No **').css("color", "red");
+                    $("#phone").focus();
+                    return false;
+                }
+                if (!agree) {
+                    $('#check1').html('** Please Check The Disclaimer Box **').css("color", "red");
+                    $("#agree").focus();
+                    return false;
+                }
+
+            $('#btn_submit').attr('disabled', true).val('Sending...');
+
+            // Prepare data as URL-encoded form
+            var formData = {
+                name: name,
+                email: email,
+                phone: phone,
+                zipcode: zipcode,
+                message: message,
+                service: service
+            };
+
+            var scriptURL = 'webappurl;
+
+            $.ajax({
+                url: scriptURL,
+                type: "POST",
+                data: formData, // Automatically sends as application/x-www-form-urlencoded
+                success: function (data) {
+                    if (data.result === 'success') {
+                        $('#btn_submit').removeAttr('disabled').val('Sent');
+                        $('#check1').html('** Thank You For Contacting Us, We Will Contact You Soon **').css("color", "green");
+                        $("#myForm")[0].reset();
+                    } else {
+                        $('#btn_submit').removeAttr('disabled').val('Retry');
+                        $('#check1').html(data.message).css("color", "red");
+                    }
+                },
+                error: function () {
+                    $('#btn_submit').removeAttr('disabled').val('Retry');
+                    // $('#check1').html('** Something went wrong. Please try again. **').css("color", "red");
+					// Can show only success message becose of google script dose ot return any response
+					 $('#check1').html('** Thank You For Contacting Us, We Will Contact You Soon **').css("color", "green");
+					   $("#myForm")[0].reset();
+                }
+            });
+        });
+    });
+</script>
