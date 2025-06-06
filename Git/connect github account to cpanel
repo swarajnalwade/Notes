@@ -1,0 +1,45 @@
+Steps to connect github account to cpanel:
+
+Step 1:
+ssh-keygen -t rsa -b 2048 -C "username@domain"
+or this if kes already exits
+ssh-keygen -t rsa -b 2048 -C "username@domain" -f ~/.ssh/id_rsa2
+
+Step 2:
+Run this command to view your public key:
+
+cat ~/.ssh/id_rsa.pub
+Or for your second key:
+cat ~/.ssh/id_rsa2.pub
+
+Copy the full output — it starts with:
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQE...
+and ends with your email or key label (e.g., username@domain).
+
+Step 3:
+Then in GitHub:
+Go to github.com
+Top-right corner → Your profile icon → Settings
+In the sidebar → SSH and GPG keys
+Click the “New SSH key” button
+Title: (something like) "CPanel Server Key"
+Paste the content you copied from the terminal into the Key box
+Click Add SSH key
+
+Step 4:
+Clone and connect repository to cpanel:
+
+Find and open “Git Version Control”.
+Click on “Create” or “Clone a Repository”.
+
+Clone URL:
+Use the SSH URL from GitHub, for example:
+git@github.com:username/repository.git
+
+Repository Path :
+Here give the path of folder where you want to clone the project.
+But the folder must be completely empty.
+then click on connect.
+
+Note:
+Once the github account is connected to cpanel perform step 4 for every new repositary you want to connect form that account
