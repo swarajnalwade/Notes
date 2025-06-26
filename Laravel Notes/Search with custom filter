@@ -1,0 +1,111 @@
+Search with custom filter :
+1.Order By
+2.Sort by
+3.from date 
+4.to date 
+5.Word search
+
+===================================================
+
+Controller Code:
+
+public function allPI(Request $request)
+{
+    $search = $request->search;
+    $perPage = 100;
+    $fromDate = $request->from_date;
+    $toDate = $request->to_date;
+    $orderBy = $request->get('orderby', 'id'); 
+    $sort = $request->get('sort', 'desc');    
+
+    $allowedOrderFields = ['id', 'pi_id', 'created_at', 'updated_at', 'reference_date'];
+    if (!in_array($orderBy, $allowedOrderFields)) {
+        $orderBy = 'id';
+    }
+
+    $sort = in_array($sort, ['asc', 'desc']) ? $sort : 'desc';
+
+    try {
+        // Build base query
+        $query = PI::where('status', 'complete');
+
+        // Apply search if present
+        if ($search !== null && $search !== '') {
+            $query->where(function ($query) use ($search) {
+                $query->orWhere('pi_id', 'like', '%' . $search . '%')
+                      ->orWhereHas('client', function ($query) use ($search) {
+                          $query->where('name', 'like', '%' . $search . '%');
+                      })
+                      ->orWhereHas('producttype', function ($query) use ($search) {
+                          $query->where('producttype_name', 'like', '%' . $search . '%');
+                      })
+                      ->orWhereHas('product', function ($query) use ($search) {
+                          $query->where('product_name', 'like', '%' . $search . '%');
+                      });
+            });
+        }
+
+        // Apply date filtering smartly
+        if ($fromDate && $toDate) {
+            $query->whereBetween('created_at', [$fromDate . ' 00:00:00', $toDate . ' 23:59:59']);
+        } elseif ($fromDate) {
+            $query->whereDate('created_at', '>=', $fromDate);
+        } elseif ($toDate) {
+            $query->whereDate('created_at', '<=', $toDate);
+        }
+
+        // Fetch results
+        $pis = $query->orderBy($orderBy, $sort)
+                     ->paginate($perPage)
+                     ->withQueryString();
+
+        $serialNumber = ($pis->currentPage() - 1) * $perPage + 1;
+
+        $data = [
+            'pis' => $pis,
+            'serialNumber' => $serialNumber,
+            'search' => $search,
+            'orderBy' => $orderBy,
+            'sort' => $sort,
+            'fromDate' => $fromDate,
+            'toDate' => $toDate,
+        ];
+
+        return view('front.admin.pi.allpi', $data);
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Error occurred! Please try again after some time.');
+    }
+}
+
+===================================================
+
+Html search form code:
+
+<div class="d-flex align-items-center gap-2">
+    <form action="{{route('pi.allpi')}}" method="get" class="navbar-search d-lg-block d-none">
+            <input type="text" class="bg-base h-40-px w-auto" name="search" placeholder="Search" value="{{ request('search') }}">
+            <iconify-icon icon="ion:search-outline" class="icon"></iconify-ico
+            {{-- Order By Dropdown --}}
+            <select name="orderby" class="btn btn-outline-info-600 radius-8">
+                <option value="id" {{ request('orderby') == 'id' ? 'selected' : '' }} style="background-color:rgb(0, 121, 241);">Default</option>
+                <option value="pi_id" {{ request('orderby') == 'pi_id' ? 'selected' : '' }} style="background-color:rgb(0, 128, 255);">PI ID</option>
+                <option value="created_at" {{ request('orderby') == 'created_at' ? 'selected' : '' }} style="background-color:rgb(0, 128, 255);">Created Date</option>
+                <option value="reference_date" {{ request('orderby') == 'reference_date' ? 'selected' : '' }} style="background-color:rgb(0, 128, 255);">Order Date</option>
+                <option value="updated_at" {{ request('orderby') == 'updated_at' ? 'selected' : '' }} style="background-color:rgb(0, 128, 255);">Last Edited</option>
+            </select>
+            {{-- Sort Direction Dropdown --}}
+            <select name="sort" class="btn btn-outline-info-600 radius-8">
+                <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }} style="background-color:rgb(0, 126, 252);">Descending</option>
+                <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }} style="background-color:rgb(0, 128, 255);">Ascending</option>
+            </selec
+            {{-- From Date --}}
+            <input type="date" name="from_date" class="btn btn-outline-info-600 radius-8" value="{{ request('from_date') }}">
+    
+            {{-- To Date --}}
+            <input type="date" name="to_date" class="btn btn-outline-info-600 radius-8" value="{{ request('to_date') }}">
+            <button type="submit" class="btn btn-outline-info-600 radius-8">Search</button>
+            <a href="{{route('pi.allpi')}}" class="btn btn-outline-info-600 radius-8">Reset</a>
+    </form>
+</div>
+
+===================================================
