@@ -1,0 +1,49 @@
+# Dependency directories
+/vendor/
+node_modules/
+
+# Log files
+npm-debug.log
+yarn-error.log
+
+# Laravel environment files
+.env
+.env.*
+auth.json
+
+# Laravel 4 specific
+bootstrap/compiled.php
+app/storage/
+
+# Laravel 5+ specific
+storage/*.key
+storage/pail
+public/storage
+public/hot
+public/build
+
+# For Laravel with custom public path
+public_html/storage
+public_html/hot
+
+# PHPUnit
+.phpunit.result.cache
+
+# Homestead / Vagrant
+Homestead.yaml
+Homestead.json
+/.vagrant
+
+# IDE and editor settings (optional, but recommended)
+.phpactor.json
+*.sublime-project
+*.sublime-workspace
+*.idea/
+*.vscode/
+
+# Backup files
+.env.backup
+
+# OS-specific
+.DS_Store
+Thumbs.db
