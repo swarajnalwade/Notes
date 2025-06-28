@@ -1,0 +1,55 @@
+============================================================
+In controller  use:
+
+return redirect()->back()->with('success', 'Data updated successfully!');
+
+============================================================
+Add this code in sidebar or any other header and footer
+
+<!-- Flash Success Message Display -->
+@if(session('success'))
+<div id="flashMessage" class="alert alert-success bg-success-100 text-success-600 border-success-100 px-24 py-11 mb-0 fw-semibold text-lg radius-8 d-flex align-items-center justify-content-between"
+    role="alert" style="position: fixed; bottom: 20px; right: 20px; width: auto; max-width: 350px; z-index: 1050;">
+    <div class="d-flex align-items-center gap-2">
+        <iconify-icon icon="akar-icons:double-check" class="icon text-xl"></iconify-icon>
+       {{ session('success') }}
+    </div>
+    <button type="button" data-dismiss="alert" aria-label="Close" class="close remove-button text-success-600 text-xxl line-height-1">
+        <iconify-icon icon="iconamoon:sign-times-light" class="icon"></iconify-icon>
+    </button>
+</div>
+@endif
+
+<!-- Flash Failed Message Display -->
+@if(session('error'))
+<div id="flashMessage" class="alert alert-danger bg-danger-100 text-danger-600 border-danger-100 px-24 py-11 mb-0 fw-semibold text-lg radius-8 d-flex align-items-center justify-content-between"
+    role="alert" style="position: fixed; bottom: 20px; right: 20px; width: auto; max-width: 350px; z-index: 1050;">
+    <div class="d-flex align-items-center gap-2">
+        <iconify-icon icon="akar-icons:double-check" class="icon text-xl"></iconify-icon>
+       {{ session('error') }}
+    </div>
+    <button type="button" data-dismiss="alert" aria-label="Close" class="close remove-button text-danger-600 text-xxl line-height-1">
+        <iconify-icon icon="iconamoon:sign-times-light" class="icon"></iconify-icon>
+    </button>
+</div>
+@endif
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var flashMessage = document.getElementById('flashMessage');
+    if (flashMessage) {
+        setTimeout(function() {
+            // Fade out smoothly
+            flashMessage.style.transition = 'opacity 0.5s ease';
+            flashMessage.style.opacity = '0';
+
+            // Remove from DOM after fade out
+            setTimeout(function() {
+                if (flashMessage && flashMessage.parentNode) {
+                    flashMessage.parentNode.removeChild(flashMessage);
+                }
+            }, 500); // wait for fade transition to finish
+        }, 5000);
+    }
+});
+</script>
