@@ -1,0 +1,8 @@
+<!-- Code To open model with errors if there are validation error  errors-->
+<script>
+        $(document).ready(function() {
+            @if ($errors->any())
+                $('#ordertiffinModal').modal('show');
+            @endif
+        });
+</script>
