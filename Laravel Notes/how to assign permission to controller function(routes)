@@ -1,0 +1,51 @@
+Step 1:
+Create healper to handle permissions
+
+AuthorizationHelper.php(orany other)
+<?php
+
+use Illuminate\Support\Facades\Gate;
+
+if (!function_exists('authorize_any')) {
+    function authorize_any($abilities)
+    {
+        if (is_array($abilities)) {
+            if (!Gate::any($abilities)) {
+                abort(403);Add commentMore actions
+            }
+        } else {
+            Gate::authorize($abilities);
+        }
+    }
+}
+
+
+=============================================
+
+Step :
+Register the helper in composer.json(autoload)
+
+"autoload": {
+   "files": [
+      "app/Helpers/AuthorizationHelper.php"
+    ]
+},
+
+=============================================
+
+Step 3:
+
+Use the helper in controller in helper to restrict the access according to the permissions.
+
+public function create()
+{
+    authorize_any('category add');
+    try {
+        return view('admin.category.create');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Error occurred! Please try again later.');
+    }
+}
+
+
+Note you can use both single or multiple permissons
