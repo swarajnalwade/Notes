@@ -26,6 +26,8 @@ chmod -R 777 bootstrap/cache
 chmod 664 storage/logs/laravel.log
 chmod -R 775 storage/framework/sessions/
 chmod -R 775 storage/framework/views/
+chmod -R 775 storage bootstrap/cache
+chmod -R 777 storage bootstrap/cache
 
 
 OR
@@ -36,6 +38,12 @@ chmod -R 777 /home/username/public_html/storage
 chmod -R 777 /home/username/public_html/bootstrap/cache
 chmod -R 775 /home/username/public_html/storage/logs/laravel.log
 chmod -R 775 home/username/public_html/storage/framework/
+
+
+-------------------------------------------------------------------------------
+OR
+
+mkdir -p storage/framework/views
 chmod -R 775 /home/username/public_html/storage/framework/sessions/
 chmod -R 775 /home/username/public_html/storage/framework/views/
 
