@@ -4,3 +4,7 @@ if this doesn’t work use below commands
 git fetch origin
 git reset --hard origin/main
 ======================================================
+Or
+cd public_html
+git reset --hard origin/main
+git pull origin main --force
