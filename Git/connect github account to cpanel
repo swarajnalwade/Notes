@@ -26,6 +26,21 @@ Title: (something like) "CPanel Server Key"
 Paste the content you copied from the terminal into the Key box
 Click Add SSH key
 
+Additional Setp(Only if you are not using be defauls id_rsa):
+Add new ras key is nano editor:
+1:Open Nano Editer:
+  nano ~/.ssh/config
+2: tell Git to use id_rsa2 by pasting below code in editer.
+    In your nano editor (~/.ssh/config), paste the following lines exactly:
+   Host github.com
+      HostName github.com
+      User git
+      IdentityFile ~/.ssh/id_rsa2
+3:Set correct permissions:
+  chmod 600 ~/.ssh/config
+  chmod 600 ~/.ssh/id_rsa2
+  chmod 644 ~/.ssh/id_rsa2.pub
+
 Step 4:
 Clone and connect repository to cpanel:
 
