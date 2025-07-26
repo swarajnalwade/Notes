@@ -1,0 +1,27 @@
+Clear and rebuld cache:
+===================================================
+
+Method 1:
+1. Fully Clear All Laravel Caches:
+php artisan cache:clear         # Clears application cache
+php artisan config:clear        # Clears config cache
+php artisan route:clear         # Clears route cache
+php artisan view:clear          # Clears compiled Blade views
+php artisan event:clear         # Clears cached events
+php artisan clear-compiled      # Clears compiled class files
+php artisan optimize:clear      # Clears all optimizations (meta command)
+
+2. Rebuild All Laravel Caches
+php artisan config:cache        # Rebuild config cache
+php artisan route:cache         # Rebuild route cache (only if no name conflicts)
+php artisan view:cache          # Compile all Blade views
+php artisan event:cache         # Cache events and listeners
+
+========================================================================
+
+Method 2:
+1. Fully Clear All Laravel Caches:
+php artisan optimize:clear && php artisan view:clear && php artisan route:clear && php artisan config:clear && php artisan cache:clear && php artisan event:clear && php artisan clear-compiled
+
+2. Rebuild All Laravel Caches
+php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan event:cache
