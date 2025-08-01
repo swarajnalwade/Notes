@@ -1,0 +1,53 @@
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => [
+            'required',
+            'email:rfc,dns',
+            'max:255',
+            'unique:vendors,email',
+            function ($attribute, $value, $fail) {
+                $disposableDomains = ['mailinator.com', 'tempmail.com'];
+                $domain = explode('@', $value)[1] ?? '';
+                if (in_array(strtolower($domain), $disposableDomains)) {
+                    $fail('We do not accept temporary or disposable email addresses.');
+                }
+            },
+        ],
+        'phone' => 'required|numeric|digits:10|unique:vendors,phone',
+        'password' => 'required|string|min:8|confirmed',
+        'status' => 'required|in:active,inactive',
+        'profile_pic' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+    ], [
+        // 👇 Custom Error Messages
+        'name.required' => 'Please enter your full name.',
+        'name.max' => 'Name cannot be longer than 255 characters.',
+
+        'email.required' => 'Email address is required.',
+        'email.email' => 'Please enter a valid email address.',
+        'email.max' => 'Email cannot be more than 255 characters.',
+        'email.unique' => 'This email is already registered.',
+
+        'phone.required' => 'Phone number is required.',
+        'phone.numeric' => 'Phone number must contain digits only.',
+        'phone.digits' => 'Phone number must be exactly 10 digits.',
+        'phone.unique' => 'This phone number is already registered.',
+
+        'password.required' => 'Password is required.',
+        'password.min' => 'Password must be at least 8 characters.',
+        'password.confirmed' => 'Password confirmation does not match.',
+
+        'status.required' => 'Status is required.',
+        'status.in' => 'Status must be either active or inactive.',
+
+        'profile_pic.image' => 'Uploaded file must be an image.',
+        'profile_pic.mimes' => 'Allowed image formats: jpeg, png, jpg, webp.',
+        'profile_pic.max' => 'Profile picture must not exceed 2MB.',
+    ]);
+
+    // Now $validated contains clean data
+    Vendor::create($validated);
+    
+    return redirect()->back()->with('success', 'Vendor created successfully!');
+}
