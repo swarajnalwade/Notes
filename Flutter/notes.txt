@@ -1,0 +1,26 @@
+=============================================
+
+Create release .abb file:
+
+flutter clean
+flutter pub get
+flutter build appbundle --release
+
+=============================================
+
+Run app on device:
+flutter run
+
+Create APK:
+flutter build apk --release
+
+
+=============================================
+
+
+
+
+
+
+
+=============================================
