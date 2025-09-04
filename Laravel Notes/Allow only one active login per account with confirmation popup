@@ -1,0 +1,114 @@
+==============================================================
+use Illuminate\Support\Facades\DB;
+
+public function store(LoginRequest $request): RedirectResponse
+{
+    $user = User::where('email', $request->email)->first();
+
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
+    }
+
+    if ($user->status !== 'active') {
+        return back()->withErrors([
+            'email' => 'The account is inactive. Please contact the administrator.',
+        ]);
+    }
+
+    // 🔍 Check if user already has another session
+    $hasOtherSession = DB::table('sessions')
+        ->where('user_id', $user->id)
+        ->exists();
+
+    if ($hasOtherSession) {
+        // Don’t log them in yet, ask confirmation
+        return back()->with([
+            'force_login_email' => $request->email,
+            'force_login_password' => $request->password,
+            'show_force_login_popup' => true,
+        ]);
+    }
+
+    // Normal login
+    $request->authenticate();
+    $request->session()->regenerate();
+
+    return redirect()->intended(route('dashboard', absolute: false));
+}
+
+public function forceLogin(Request $request)
+{
+    $user = User::where('email', $request->email)->first();
+
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        return redirect()->route('login')->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
+    }
+
+    // Kill old sessions
+    DB::table('sessions')->where('user_id', $user->id)->delete();
+
+    // Login here
+    Auth::login($user);
+    $request->session()->regenerate();
+
+    return redirect()->intended(route('dashboard', absolute: false));
+}
+
+==============================================================
+
+
+        Route::post('/force-login', [AuthenticatedSessionController::class, 'forceLogin'])
+    ->name('force.login');
+
+=====================================================================
+
+@if(session('show_force_login_popup'))
+    <!-- Bootstrap Modal -->
+    <div class="modal fade" id="forceLoginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-3 shadow">
+                <div class="modal-header">
+                    <h5 class="modal-title">Active Session Detected</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    You are already logged in on another device.<br>
+                    Do you want to log out from there and continue here?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        No, keep it as is
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="document.getElementById('force-login-form').submit();">
+                        Yes, log out others
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden form -->
+    <form id="force-login-form" action="{{ route('force.login') }}" method="POST" style="display:none;">
+        @csrf
+        <input type="hidden" name="email" value="{{ session('force_login_email') }}">
+        <input type="hidden" name="password" value="{{ session('force_login_password') }}">
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var myModal = new bootstrap.Modal(document.getElementById('forceLoginModal'));
+            myModal.show();
+        });
+    </script>
+@endif
+
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+=====================================================================================================
