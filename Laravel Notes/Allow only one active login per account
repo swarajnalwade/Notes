@@ -1,0 +1,40 @@
+use Illuminate\Support\Facades\DB;
+public function store(LoginRequest $request): RedirectResponse
+{
+    $user = User::where('email', $request->email)->first();
+    $password = $request->password;
+
+    if (!$user) {
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
+    }
+
+    if (!Hash::check($password, $user->password)) {
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
+    }
+
+    if ($user->status !== 'active') {
+        return back()->withErrors([
+            'email' => 'The account is inactive. Please contact the administrator.',
+        ]);
+    }
+
+    // Authenticate user
+    $request->authenticate();
+
+    // Regenerate session
+    $request->session()->regenerate();
+
+    // 🔑 Remove all other active sessions of this user
+    if (config('session.driver') === 'database') {
+        DB::table('sessions')
+            ->where('user_id', $user->id)
+            ->where('id', '!=', session()->getId())
+            ->delete();
+    }
+
+    return redirect()->intended(route('dashboard', absolute: false));
+}
