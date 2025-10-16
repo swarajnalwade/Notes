@@ -1,0 +1,21 @@
+Error: 
+connect to host github.com port 22: Connection refused
+
+SOlution:
+Run below commands in terminal:
+
+Edit your SSH config:
+nano ~/.ssh/config
+
+Then Add this:
+
+Host github.com
+  Hostname ssh.github.com
+  Port 443
+  User git
+  IdentityFile ~/.ssh/id_rsa
+
+Save & exit (Ctrl+O, Enter, Ctrl+X).
+
+Then test again:
+ssh -T git@github.com
