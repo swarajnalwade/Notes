@@ -19,3 +19,4 @@ Save & exit (Ctrl+O, Enter, Ctrl+X).
 
 Then test again:
 ssh -T git@github.com
+
