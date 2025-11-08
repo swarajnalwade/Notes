@@ -1,3 +1,12 @@
+//Open Cpanel terminal and use below commands:
+Step 1 :Set the folder path
+Step 2 : Set the permissions to the folder you want to delete.
+Step 3 : Force delete the folder.
+
+========================================================
+
 cd folderpath
 chmod -R 777 foldername
 rm -rf foldername
+
+========================================================
