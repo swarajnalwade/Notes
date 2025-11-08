@@ -1,0 +1,3 @@
+cd folderpath
+chmod -R 777 foldername
+rm -rf foldername
