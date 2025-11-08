@@ -1,0 +1,18 @@
+How Disable the HTTP Basic Authentication (Popup) for cPanel or WHM.
+The popup is a result of HTTP Basic Authentication being enabled, and this type of authentication is often configured either for directory protection or as an extra security layer on the server, even when using HTTPS.
+
+1. Add the Configuration Setting:
+At the root@server:~# prompt, run the following command to add the line skiphttpauth=1 to the end of the cpanel.config file:
+Command:
+echo "skiphttpauth=1" >> /var/cpanel/cpanel.config
+
+2. Verify the Change
+To confirm the line was added, you can quickly view the last few lines of the file using the tail command:
+Command:
+tail /var/cpanel/cpanel.config
+
+
+3. Restart cPanel Service:
+This is the crucial step to make the new setting take effect. Run this command:
+Command:
+/usr/local/cpanel/scripts/restartsrv_cpsrvd
