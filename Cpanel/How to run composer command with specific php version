@@ -1,0 +1,7 @@
+How to run composer or artisan command with specific php version:
+
+Use this:
+/opt/cpanel/ea-php82/root/usr/bin/command
+
+Example:
+/opt/cpanel/ea-php82/root/usr/bin/php artisan migrate
