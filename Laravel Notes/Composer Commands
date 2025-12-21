@@ -1,0 +1,13 @@
+===============================================================
+To Install Composer:
+composer install
+===============================================================
+For upgrading all libraries to the latest versions :
+composer update
+===============================================================
+Install New Packages on live server
+composer install --optimize-autoloader --no-dev
+===============================================================
+Install New Packages on local server (After Git Pull) :
+composer install
+===============================================================
