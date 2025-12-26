@@ -1,0 +1,60 @@
+<script>
+     document.querySelectorAll('.effect-card').forEach((card) => {
+  const glow = card.querySelector('.effect-glow');
+
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  card.style.setProperty('--x', `${x}px`);
+  card.style.setProperty('--y', `${y}px`);
+
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+  const rotateX = ((y - centerY) / centerY) * 10;
+  const rotateY = ((x - centerX) / centerX) * -10;
+
+  card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+  const angle = 135 + rotateX - rotateY;
+  card.style.setProperty('--angle', `${angle}deg`);
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+  card.style.setProperty('--angle', `135deg`);
+  });
+});
+
+
+
+  // Disable right-click
+  document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+  });
+
+  // Disable specific keyboard shortcuts
+  document.addEventListener('keydown', function (e) {
+    // F12
+    if (e.keyCode === 123) {
+    e.preventDefault();
+    }
+
+  // Ctrl+U or Ctrl+Shift+I or Ctrl+Shift+J or Ctrl+C
+  if (
+  (e.ctrlKey && e.key.toLowerCase() === 'u') ||
+  (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
+  (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'j') ||
+  (e.ctrlKey && e.key.toLowerCase() === 'c')
+  ) {
+    e.preventDefault();
+    }
+  });
+
+  // Optional: Disable text selection
+  document.addEventListener('selectstart', function (e) {
+    e.preventDefault();
+  });
+
+</script>
