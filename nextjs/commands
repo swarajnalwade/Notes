@@ -1,0 +1,26 @@
+============================================
+
+To create New project:
+npx create-next-app@latest appname
+
+============================================
+
+To install npm modules
+npm install
+
+============================================
+
+To run project
+npm run dev
+
+============================================
+
+To Build Export:
+npm run build
+
+============================================
+
+Force Build Export:
+rd -Recurse -Force .next; npm run build
+
+============================================
