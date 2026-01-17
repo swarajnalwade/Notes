@@ -1,8 +1,9 @@
 ==============================
 
-To install the Android folder
+To install or clear the Android folder
 npx expo prebuild
-or
+
+To force clean the entire Android folder
 npx expo prebuild --clean
 
 Go to the Android folder
@@ -11,21 +12,21 @@ cd android
 Generate APK
 .\gradlew assembleRelease
 
-
 ==============================
 
-Run directly on phone using USB
+Run the app directly on the phone using USB
 npx expo run:android
 
 
 ==============================
 
 To generate release .aab file
+cd android
 ./gradlew bundleRelease
 
 ==============================
 
-To remove old andriod folder 
+To remove the old Android folder 
 Remove-Item -Recurse -Force android 
 or
 npx rimraf android 
