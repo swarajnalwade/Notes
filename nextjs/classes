@@ -1,0 +1,40 @@
+=============================
+
+h-screen :
+
+1.Fits screen perfectly.
+2.Container stays fixed, content overflows.
+3.height: 100vh;
+
+=============================
+
+min-h-screen :
+1.Fits screen perfectly.
+2.Container expands to fit content.
+3.min-height: 100vh;
+
+=============================
+
+py : add top bottom pading.
+px : add right left padding.
+pt : add top padding.
+pb : add bottom padding.
+
+=============================
+
+my : add top bottom margin.
+mx : add right left margin.
+mt : add top margin.
+mb : add bottom margin.
+
+=============================
+Sizes : 
+Prefix ||	Minimum Width || 	Typical Device
+-	     || 0px	          ||  Mobile phones (base styles).
+sm:	   || 640px	        ||  Large phones / Small tablets.
+md:	   || 768px	        ||  Tablets (like an iPad).
+lg:	   || 1024px	      ||  Laptops and small desktops.
+xl:	   || 1280px	      ||  Large Desktop monitors.
+2xl:   || 1536px	      ||  Ultra-wide monitors.
+
+=============================
