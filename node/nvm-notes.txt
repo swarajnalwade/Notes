@@ -1,0 +1,11 @@
+======================================
+Check nvm version: nvm version
+======================================
+Update your NVM list: nvm install 24
+======================================
+Check installed nvm versions: nvm list
+======================================
+Switch versions: nvm use 24
+======================================
+Make it the default: nvm alias default 24
+======================================
