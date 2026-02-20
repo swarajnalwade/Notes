@@ -24,3 +24,8 @@ Force Build Export:
 rd -Recurse -Force .next; npm run build
 
 ============================================
+
+Updates all versions in package.json
+npx npm-check-updates -u
+
+============================================
