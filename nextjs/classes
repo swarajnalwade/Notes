@@ -38,3 +38,30 @@ xl:	   || 1280px	      ||  Large Desktop monitors.
 2xl:   || 1536px	      ||  Ultra-wide monitors.
 
 =============================
+
+m-auto : Centers a fixed-width element horizontally.
+
+items-center: Centers items vertically inside a flex container.
+
+justify-between: Pushes items to the far edges (perfect for navbars).
+
+gap-4: Adds consistent spacing between items in a flex or grid (no more manual margins!).
+
+grid-cols-2: Instantly creates a 2-column layout.
+
+rounded-lg / rounded-full: Rounds the corners (pill-shaped if full).
+
+shadow-md / shadow-xl: Adds depth with a drop shadow.
+
+border / border-gray-200: Adds a subtle 1px border.
+
+bg-opacity-50: Makes a background semi-transparent.
+
+backdrop-blur-sm: Creates that "frosted glass" effect (great for fixed headers).
+
+truncate: Cuts off long text with an ellipsis (...) so it doesn't break your layout.
+
+inset-0: A shortcut for top: 0; right: 0; bottom: 0; left: 0; (perfect for overlays).
+
+=============================
+
