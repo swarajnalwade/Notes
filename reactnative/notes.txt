@@ -12,6 +12,9 @@ cd android
 Generate APK :
 .\gradlew assembleRelease
 
+Download the generated apk on your  phone:
+.\gradlew installRelease
+
 ==============================
 
 Run the app directly on the phone using USB :
