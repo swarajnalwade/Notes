@@ -15,6 +15,11 @@ Generate APK :
 Download the generated apk on your  phone:
 .\gradlew installRelease
 
+============================= 
+
+To generate and download apk in one command: 
+cd android; .\gradlew assembleRelease; .\gradlew installRelease
+
 ==============================
 
 Run the app directly on the phone using USB :
