@@ -35,3 +35,9 @@ or
 npx rimraf android 
 
 ==============================
+
+Rename the project:
+npx react-native-rename "newappname" -b com.newappname.app
+
+==============================
+
